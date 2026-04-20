@@ -7,7 +7,6 @@ use Mangoweb\Tester\HttpMocks\Session;
 use Mangoweb\Tester\Infrastructure\Container\AppContainerHook;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\Statement;
-use Nette\Http\Request;
 use Nette\Http\UrlScript;
 
 
@@ -27,13 +26,13 @@ class HttpMocksContainerHook extends AppContainerHook
 	{
 		if ($builder->hasDefinition('http.request')) {
 			$builder->getDefinition('http.request')
-				->setClass(Request::class)
+				->setClass(HttpRequest::class)
 				->setFactory(HttpRequest::class, [new Statement(UrlScript::class, [$this->baseUrl])]);
 		}
 
 		if ($builder->hasDefinition('session.session')) {
 			$builder->getDefinition('session.session')
-				->setClass(\Nette\Http\Session::class)
+				->setClass(Session::class)
 				->setFactory(Session::class);
 		}
 	}
